@@ -8,8 +8,8 @@ public class p1221 {
         short RL[] = new short[2];
         int count=0;
         for(int i=1;i<s.length();i+=2){
-            RL[findIndex(s.charAt(i-1))]++;
-            RL[findIndex(s.charAt(i))]++;
+            RL[getValue(s.charAt(i-1))]++;
+            RL[getValue(s.charAt(i))]++;
             if(RL[0] == RL[1]){
                 RL[0]=0;
                 RL[1]=0;
@@ -21,12 +21,12 @@ public class p1221 {
     public static int balancedStringSplit2(String s){
         int count=0,result=0;
         for(int i=1;i<s.length();i+=2){
-            result += findIndex(s.charAt(i-1))+findIndex(s.charAt(i));
+            result += getValue(s.charAt(i-1))+getValue(s.charAt(i));
             if(result==0) count++;
         }
         return count;
     }
-    public static int findIndex(char c){
+    public static int getValue(char c){
         return (c=='L')?1:-1;
     }
     public static void main(String[] args) {
