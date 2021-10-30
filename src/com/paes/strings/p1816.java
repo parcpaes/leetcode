@@ -2,7 +2,7 @@ package com.paes.strings;
 
 public class p1816 {
     public String truncateSentence(String s, int k) {
-         String words[] = s.split(" ");
+        String words[] = s.split(" ");
         for(int i=1;i<words.length;i++){
             words[i] = words[i-1]+" "+words[i];
         }
