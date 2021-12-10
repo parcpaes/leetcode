@@ -5,27 +5,40 @@ import java.util.stream.Collectors;
 
 public class p1238PermutationBinary {
     public static List<Integer> circularPermutation(int n, int start) {
-        if(n==1) return (start==1)?List.of(start,0):List.of(0,1);
-        LinkedList<Integer> permutationBits = new LinkedList<>();
-        backtracking(permutationBits,1<<n,start,start);
-        return new ArrayList<>(permutationBits);
-    }
-    public static void backtracking(LinkedList<Integer> permutation,int n,int start,int init){
-        if(permutation.contains(start)) return;
-        if(permutation.size()==n) return;
-        if(!permutation.contains(start)){
-            permutation.add(start);
+        int size = (1<<n);
+        int startIndex= grayToBinary(start);
+        ArrayList<Integer> permutationBits = new ArrayList<>();
+        int modIndex;
+        for (int i = 0; i < (1<<n); i++) {
+            modIndex = startIndex%size;
+            permutationBits.add((modIndex)^(modIndex>>1));
+            startIndex++;
         }
-        for(int i=0,j=n-1;i<0 && j>=0;i++,j--){
-            int bits1 = Integer.bitCount(i^start);
-            int bits2 = Integer.bitCount(j^start);
-            if(bits1==1){
-                backtracking(permutation,n,j,init);
-            }
-        }
+        return permutationBits;
     }
+
+    public static int grayToBinary(int g){
+        int B = g^(g>>1);
+        B = B^(B>>2);
+        B = B^(B>>4);
+        B = B^(B>>8);
+        B = B^(B>>16);
+        return B;
+    }
+
+    public static List<Integer> circularPermutation2(int n, int start) {
+        List<Integer> result = new ArrayList<>();
+        for (int i = 0; i < 1<<n; ++i)
+            result.add(start^i^i>>1);
+        return result;
+    }
+
+    
     public static void main(String[] args) {
-        List<Integer> bits = circularPermutation(4,1);
+        List<Integer> bits = circularPermutation2(4,2);
         System.out.println(bits.toString());
+        for (Integer bit : bits) {
+            System.out.println(Integer.toBinaryString(bit));
+        }
     }
 }
